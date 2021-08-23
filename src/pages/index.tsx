@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input } from "../components/Form/Input";
 
-type SignInForm = {
+type SignInFormData = {
   email: string;
   password: string;
 };
@@ -24,13 +24,11 @@ export default function SignIn() {
 
   const { errors } = formState;
 
-  const handleSignIn: SubmitHandler<SignInForm> = async (values) => {
+  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     console.log(values);
   };
-
-  console.log(errors);
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
