@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.3.0",
     "@hookform/resolvers": "^2.8.0",
     "apexcharts": "^3.26.2",
+    "faker": "^5.5.3",
     "framer-motion": "^4.1.13",
     "next": "10.2.0",
     "react": "17.0.2",
@@ -24,8 +25,10 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.8",
     "@types/node": "^15.0.2",
     "@types/react": "^17.0.5",
+    "miragejs": "^0.1.41",
     "typescript": "^4.2.4"
   }
 }
