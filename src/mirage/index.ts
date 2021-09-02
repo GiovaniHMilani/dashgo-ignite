@@ -26,14 +26,14 @@ export function makeServer() {
       }),
     },
     seeds(server) {
-      server.createList("user", 200);
+      server.createList("user", 10);
     },
     routes() {
       this.namespace = "mirage-api";
       this.timing = 750;
 
-      this.get("/users");
-      this.post("/users");
+      this.get("/user");
+      this.post("/user");
 
       this.namespace = "";
       this.passthrough();

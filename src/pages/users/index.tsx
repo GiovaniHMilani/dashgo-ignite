@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { RiAddLine } from "react-icons/ri";
 import Link from "next/link";
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import { Header } from "../../components/Header";
@@ -25,10 +24,21 @@ import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
 export default function UserList() {
   const { data, isLoading, error } = useQuery("user", async () => {
-    const response = await fetch("http://localhost:3000/mirage-api/users");
+    const response = await fetch("http://localhost:3000/mirage-api/user");
     const data = await response.json();
 
-    return data;
+    const users = data.users.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+    }));
+
+    return users;
   });
 
   const isWideVersion = useBreakpointValue({
@@ -84,48 +94,22 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Giovani Milani</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          giovanimilani11@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideVersion && <Td>05 de Abril, 2021</Td>}
-                  </Tr>
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Giovani Milani</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          giovanimilani11@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideVersion && <Td>05 de Abril, 2021</Td>}
-                  </Tr>
-                  <Tr>
-                    <Td px={["4", "4", "6"]}>
-                      <Checkbox colorScheme="pink" />
-                    </Td>
-                    <Td>
-                      <Box>
-                        <Text fontWeight="bold">Giovani Milani</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          giovanimilani11@gmail.com
-                        </Text>
-                      </Box>
-                    </Td>
-                    {isWideVersion && <Td>05 de Abril, 2021</Td>}
-                  </Tr>
+                  {data.map((user) => (
+                    <Tr key={user.id}>
+                      <Td px={["4", "4", "6"]}>
+                        <Checkbox colorScheme="pink" />
+                      </Td>
+                      <Td>
+                        <Box>
+                          <Text fontWeight="bold">{user.name}</Text>
+                          <Text fontSize="sm" color="gray.300">
+                            {user.email}
+                          </Text>
+                        </Box>
+                      </Td>
+                      {isWideVersion && <Td>{user.createdAt}</Td>}
+                    </Tr>
+                  ))}
                 </Tbody>
               </Table>
               <Pagination />
