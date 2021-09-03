@@ -32,8 +32,8 @@ export function makeServer() {
       this.namespace = "mirage-api";
       this.timing = 750;
 
-      this.get("/user");
-      this.post("/user");
+      this.get("/users");
+      this.post("/users");
 
       this.namespace = "";
       this.passthrough();

@@ -17,35 +17,14 @@ import {
 } from "@chakra-ui/react";
 import { RiAddLine } from "react-icons/ri";
 import Link from "next/link";
-import { useQuery } from "react-query";
 
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
+import { useUsers } from "../../services/hooks/useUsers";
+
 export default function UserList() {
-  const { data, isLoading, error, isFetching } = useQuery(
-    "user",
-    async () => {
-      const response = await fetch("http://localhost:3000/mirage-api/user");
-      const data = await response.json();
-
-      const users = data.users.map((user) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        }),
-      }));
-
-      return users;
-    },
-    {
-      staleTime: 1000 * 5,
-    }
-  );
+  const { data, isLoading, error, isFetching } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
